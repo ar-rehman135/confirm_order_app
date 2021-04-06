@@ -2,6 +2,7 @@
 
 # dependencies
 /confirm_order_ui/node_modules
+/confirm_order_backend/.idea
 /.pnp
 .pnp.js
 
