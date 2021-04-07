@@ -3,7 +3,6 @@ import json
 from flask import Flask, request, send_from_directory
 from flask_cors import cross_origin
 from flask_mongoengine import MongoEngine
-import socket
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 app.config['MONGODB_SETTINGS'] = {
@@ -22,7 +21,6 @@ class UserData(db.Document):
     input_request = db.StringField()
     output_request = db.StringField()
     ip_address = db.StringField()
-    host_name = db.StringField()
     date = db.DateField()
 
 
@@ -35,14 +33,12 @@ def index(path):
 
 #######################End File #########################
 
-def saveToDb(ip, op):
-    hostName = socket.gethostname()
-    ipaddress = socket.gethostbyname(hostName)
+def saveToDb(ip, op, ipaddre):
+    ipaddress = ipaddre
     u = UserData()
     u.input_request = ip
     u.output_request = op
     u.ip_address = ipaddress
-    u.host_name = hostName
     u.date = datetime.datetime.now()
     u.save()
 
@@ -56,12 +52,9 @@ def insert_data():
             'text': 'Hello, How old are you!'
         }
         j = json.dumps(data)
-        saveToDb('', j)
+        saveToDb('', j, request.environ['REMOTE_ADDR'])
         return j
     else:
-        hostName = socket.gethostname()
-        ipaddress = socket.gethostbyname(hostName)
-        print(hostName, ipaddress)
         record = json.loads(request.data)
         if 'state' in record:
             state = record['state']
@@ -163,7 +156,6 @@ def insert_data():
 #     return j
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    app.listen(5000, ...)
+    app.run(host='192.168.8.104', port=5000, debug=True)
 
 
