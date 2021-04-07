@@ -21,7 +21,7 @@ class UserData(db.Document):
     input_request = db.StringField()
     output_request = db.StringField()
     ip_address = db.StringField()
-    date = db.DateField()
+    date = db.DateTimeField()
 
 
 @app.route("/", defaults={"path": ""})
@@ -34,12 +34,12 @@ def index(path):
 #######################End File #########################
 
 def saveToDb(ip, op, ipaddre):
-    ipaddress = ipaddre
+    print(datetime.datetime.now().isoformat())
     u = UserData()
     u.input_request = ip
     u.output_request = op
-    u.ip_address = ipaddress
-    u.date = datetime.datetime.now()
+    u.ip_address = ipaddre
+    u.date = datetime.datetime.now().isoformat()
     u.save()
 
 @app.route('/api/handle_data', methods=['POST', 'GET'])
@@ -52,7 +52,7 @@ def insert_data():
             'text': 'Hello, How old are you!'
         }
         j = json.dumps(data)
-        saveToDb('', j, request.environ['REMOTE_ADDR'])
+        # saveToDb('', j, request.environ['REMOTE_ADDR'])
         return j
     else:
         record = json.loads(request.data)
@@ -143,17 +143,19 @@ def insert_data():
 
         return json.dumps({'error': 'Invalid Data'})
 
-# @app.route('/api/get_initial', methods=['GET'])
-# @cross_origin()
-# def get_initial_data():
-#     data = {
-#         'state': 'A',
-#         'type': 'text-input',
-#         'text': 'Hello, How old are you!'
-#     }
-#     j = json.dumps(data)
-#     saveToDb('', j)
-#     return j
+@app.route('/api/delete/data/all', methods=['GET'])
+@cross_origin()
+def delete_data():
+    if 'delete_data' in request.args:
+        delete_chk = request.args.get('delete_data')
+
+        if delete_chk == 'apiKey':
+            data_set = UserData.objects().all()
+            for data in data_set:
+                data.delete()
+            return json.dumps({"sucess": "SuccessFully Delelted All Data"})
+
+    return json.dumps({"error": "Failed To Delete Data"})
 
 if __name__ == "__main__":
     app.run(host='192.168.8.104', port=5000, debug=True)
