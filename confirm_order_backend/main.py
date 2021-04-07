@@ -156,6 +156,6 @@ def insert_data():
 #     return j
 
 if __name__ == "__main__":
-    app.run(host='192.168.8.104', port=5000, debug=True)
+    app.run(port=5000, debug=True)
 
 
