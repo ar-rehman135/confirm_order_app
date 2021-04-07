@@ -25,5 +25,8 @@ export const themeDark = createMuiTheme({
 export const useStyles = makeStyles({
     actionButton:{
         margin:"20px",
+    },
+    paper:{
+      backgroundColor:"#272727"
     }
 });

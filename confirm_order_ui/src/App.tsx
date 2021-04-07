@@ -7,18 +7,14 @@ import ActionButtons from './MainComponents/ActionButtons';
 import { themeDark, useStyles } from './shared/commonStyles';
 import {BrowserRouter as Router} from "react-router-dom";
 
-
 function App() {
   const classes = useStyles();
 
-  let data:any;
-  
-  if(data.type === undefined){
-    data.type = "text-input";
-  }
   
 
-  if(data.type === "text-input")
+  
+
+  // if(data.type === "text-input")
   {
       // let field = <MyTextField id="standard-basic" label="Enter your age" variant="outlined"/>;
   }
@@ -29,10 +25,11 @@ function App() {
       <Router>
         <MuiThemeProvider theme={themeDark}>
           <form autoComplete="off">
-          <Grid container spacing={3}  justify="space-evenly">
-            <Grid item xs={8}>
-                <Paper>
-                  <ActionButtons />                  
+          <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
+            <Grid item xs={4} style={{height:"100%"}}>
+                <Paper elevation={3}>
+                  <MyTextField id="standard-basic" size="small" label="Enter your age" variant="outlined"/>
+                  <ActionButtons />
                 </Paper>
               </Grid>
             </Grid>

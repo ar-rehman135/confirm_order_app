@@ -63,9 +63,9 @@ function RadioOptions(props:Props) {
                 <FormControl component="fieldset">
                 <FormLabel component="legend">Gender</FormLabel>
                 <RadioGroup  name={props.id} onChange={handleChange}>
-                    props.optionList.map((item,index)=>{
+                    {/* props.optionList.map((item,index)=>{
                         return <FormControlLabel key={index} value={item} control={<Radio />} label={item} />
-                    })
+                    }) */}
                 </RadioGroup>
                 </FormControl>
             </Grid>
