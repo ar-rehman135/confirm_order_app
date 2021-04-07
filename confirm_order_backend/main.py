@@ -21,7 +21,7 @@ class UserData(db.Document):
     input_request = db.StringField()
     output_request = db.StringField()
     ip_address = db.StringField()
-    date = db.DateField()
+    date = db.DateTimeField()
 
 
 @app.route("/", defaults={"path": ""})
@@ -34,13 +34,14 @@ def index(path):
 #######################End File #########################
 
 def saveToDb(ip, op, ipaddre):
-    ipaddress = ipaddre
-    u = UserData()
-    u.input_request = ip
-    u.output_request = op
-    u.ip_address = ipaddress
-    u.date = datetime.datetime.now()
-    u.save()
+    # print(datetime.datetime.now().isoformat())
+    # u = UserData()
+    # u.input_request = ip
+    # u.output_request = op
+    # u.ip_address = ipaddre
+    # u.date = datetime.datetime.now().isoformat()
+    # u.save()
+    return  ""
 
 @app.route('/api/handle_data', methods=['POST', 'GET'])
 @cross_origin()
@@ -60,10 +61,10 @@ def insert_data():
             state = record['state']
         if 'response' in record:
             response = record['response']
-        if state == 'A':
+        if state == 'A' and response:
             response  = int(response)
             if response<18 and response>0:
-                options = ['Choclate', 'Vanilla', 'Strawberries', 'Mango', 'None']
+                options = ['Choclate', 'Vanilla', 'Strawberries', 'Mango']
                 data = {
                     'state': 'B1',
                     'type': 'multiple-choice',
@@ -75,7 +76,7 @@ def insert_data():
                     'response': response
                 })
                 op_json = json.dumps(data)
-                saveToDb(ip_json, op_json)
+                saveToDb(ip_json, op_json, request.environ['REMOTE_ADDR'])
                 return op_json
             else:
                 k = 18
@@ -95,9 +96,9 @@ def insert_data():
                     'response': response
                 })
                 op_json = json.dumps(data)
-                saveToDb(ip_json, op_json)
+                saveToDb(ip_json, op_json, request.environ['REMOTE_ADDR'])
                 return op_json
-        if state == 'B1':
+        if state == 'B1' and response:
             data = {
                 'state': 'C1',
                 'text': 'Order Confirmed'
@@ -107,9 +108,9 @@ def insert_data():
                 'response': response
             })
             op_json = json.dumps(data)
-            saveToDb(ip_json, op_json)
+            saveToDb(ip_json, op_json, request.environ['REMOTE_ADDR'])
             return op_json
-        if state == 'B2':
+        if state == 'B2' and response:
             content = [
                 {
                     "type": 'Title',
@@ -138,22 +139,24 @@ def insert_data():
                 'response': response
             })
             op_json = json.dumps(data)
-            saveToDb(ip_json, op_json)
+            saveToDb(ip_json, op_json, request.environ['REMOTE_ADDR'])
             return op_json
 
         return json.dumps({'error': 'Invalid Data'})
 
-# @app.route('/api/get_initial', methods=['GET'])
-# @cross_origin()
-# def get_initial_data():
-#     data = {
-#         'state': 'A',
-#         'type': 'text-input',
-#         'text': 'Hello, How old are you!'
-#     }
-#     j = json.dumps(data)
-#     saveToDb('', j)
-#     return j
+@app.route('/api/delete/data/all', methods=['GET'])
+@cross_origin()
+def delete_data():
+    if 'delete_data' in request.args:
+        delete_chk = request.args.get('delete_data')
+
+        if delete_chk == 'apiKey':
+            data_set = UserData.objects().all()
+            for data in data_set:
+                data.delete()
+            return json.dumps({"sucess": "SuccessFully Delelted All Data"})
+
+    return json.dumps({"error": "Failed To Delete Data"})
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
