@@ -1,40 +1,80 @@
 import './App.css';
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { Button, Grid, makeStyles, Paper } from '@material-ui/core';
-import MyTextField from './components/MyTextField'
-import React from 'react';
-import ActionButtons from './MainComponents/ActionButtons';
+import React, { useState,useEffect } from 'react';
 import { themeDark, useStyles } from './shared/commonStyles';
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import Question from './MainComponents/Question';
+import { handleApi } from './Api/handleApi';
+import { debug } from './shared/common';
+import { FlaskDataContext,MyContext,ReactDataContext } from './components/User';
+// import {FlaskDataContext} from 
+
+
 
 function App() {
   const classes = useStyles();
+  let [flaskData,setFlaskData] = useState({state: "", type: "", text: "", options:[]});
+  let [reactData,setReactData] = useState({state :"", response:null});
+  const [openAlert,setOpenAlert] = useState(false);
 
-  
 
-  
+  const init = async ()=>{
+      let res = await handleApi("","GET");
+      setFlaskData(res);
+  };
 
-  // if(data.type === "text-input")
-  {
-      // let field = <MyTextField id="standard-basic" label="Enter your age" variant="outlined"/>;
+  useEffect(()=>{init()},[]);
+
+  const handleSubmit = async (e:any,state:string) => {
+    e.preventDefault();  
+    console.log(flaskData);
+    console.log(reactData);
+    if(flaskData.state === "B1") {
+        setOpenAlert(true);
+    }
+    else if(flaskData.state === "B2") {
+      setOpenAlert(true);
+    }
+    else {
+      let res = await handleApi(reactData,"POST");
+      setFlaskData(res);
+    }
   }
 
-  
+  const setData = (data:any, cButton:string="")=>{
+    if(cButton === "back"){
+        setFlaskData(data);
+        setReactData({state:"",response:null});
+    }else{
+        setReactData(data);
+    }
+  }
+
   return (
     <div className="App">
       <Router>
-        <MuiThemeProvider theme={themeDark}>
-          <form autoComplete="off">
-          <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
-            <Grid item xs={4} style={{height:"100%"}}>
-                <Paper elevation={3}>
-                  <MyTextField id="standard-basic" size="small" label="Enter your age" variant="outlined"/>
-                  <ActionButtons />
-                </Paper>
-              </Grid>
-            </Grid>
-          </form>
-        </MuiThemeProvider>
+        <FlaskDataContext.Provider value={{data:flaskData,setData}}>
+          <ReactDataContext.Provider value={reactData}>
+            <MyContext.Provider value={{openAlert:openAlert,setOpenAlert}}>
+              <MuiThemeProvider theme={themeDark}>
+                <form method="post" onSubmit={(e:any)=>{handleSubmit(e,flaskData.state)}} autoComplete="off">
+                <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
+                  <Grid item xs={4} style={{height:"100%"}}>
+                      <Paper elevation={3}>
+                      <Switch>
+                          <Route exact path="/">
+                            <Question />
+                          </Route>
+                      </Switch>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </form>
+              </MuiThemeProvider>
+            </MyContext.Provider>
+          </ReactDataContext.Provider>
+        </FlaskDataContext.Provider>
       </Router>
     </div>
   );

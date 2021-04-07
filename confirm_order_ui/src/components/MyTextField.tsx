@@ -5,6 +5,7 @@ type Props = {
     id?:string;
     label?:string;
     value?:string;
+    helperText?:string;
     [x:string]:any;
 }
 

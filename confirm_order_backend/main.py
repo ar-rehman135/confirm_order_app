@@ -5,11 +5,11 @@ from flask_cors import cross_origin
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'confirm_order',
-    'host': 'localhost',
-    'port': 27017
-}
+# app.config['MONGODB_SETTINGS'] = {
+#     'db': 'confirm_order',
+#     'host': 'localhost',
+#     'port': 27017
+# }
 try:
     db = MongoEngine()
     db.init_app(app)
