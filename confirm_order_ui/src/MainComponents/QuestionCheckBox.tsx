@@ -1,55 +1,84 @@
-import { FormControlLabel } from '@material-ui/core';
-import React,{useState,useContext} from 'react'
+import { FormControlLabel, FormControl, FormLabel, FormGroup} from '@material-ui/core';
+import {useState,useContext, } from 'react'
 import Checkbox from '@material-ui/core/Checkbox';
 import { FlaskDataContext } from '../components/User';
+import ActionButtons from './ActionButtons';
 
 type Props = {
     [x:string]:any;
+    setMessage?: any;
 }
 
-let selectedItems:Array<string> = [] ;
 export default function QuestionCheckBox(props:Props) {
     
     let {data,setData} = useContext(FlaskDataContext);
 
-    const [list,setList] = useState(data.options);
-
+    const [list] = useState(data.options);
+    const [checked, setChecked] = useState(list.map(() => false));
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     const handleCheckBoxes = (e:any,check:boolean)=>{
         let v = e.target.value;
         if(check)
         {
-            selectedItems.push(v);
+            if (selectedItems.indexOf(v) === -1) {
+                selectedItems.push(v)
+                setSelectedItems(selectedItems);
+                setData({state:data.state,response:selectedItems},"")
+                props.setMessage("Ice Cream With " + selectedItems.toString() + " Is That it ?");
+            } else {
+                const remainItems = selectedItems.filter(value => value !== v);
+                setSelectedItems(remainItems);
+            }
+           
         }
         else
         {
-            selectedItems = selectedItems.filter(value => value !== v);
+            const remainItems = selectedItems.filter(value => value !== v);
+            setSelectedItems(remainItems);
+            setData({state:data.state,response: remainItems},"");
+            props.setMessage("Ice Cream With " + remainItems.toString() + " Is That it ?");
         }
-        setData({state:data.state,response:selectedItems},"")
-        console.log(selectedItems);
-    }   
+        const checkedC = [...checked];
+        const ind = list.findIndex((v1: any) => v1 === v);
+        checkedC[ind] = check;
+        setChecked(checkedC);
 
+        
+        
+    }   
+    const error = selectedItems.length <= 0 ;
 
     return (
-        <div>
-            <span>{data.text}</span>
-            {
+        <div style={{paddingLeft:"15px"}}>
+            <FormControl required error={error} component="fieldset" style={{textAlign:"left"}} >
+                <FormLabel component="legend">{data.text}</FormLabel>
+                <FormGroup>
+                {
                 list.map((item:any,index:number)=>{
-                    return (
-                         <FormControlLabel
-                            key={index}
-                            control={
-                            <Checkbox
-                                color="primary"
+                        return (
+                            <FormControlLabel
+                                key={index}
+                                control={
+                                <Checkbox
+                                    color="primary"
+                                    defaultChecked={false}
+                                    onChange={handleCheckBoxes}
+                                    checked={checked[index]}
+                                />
+                                }
+                                checked={checked[index]}
+                                defaultChecked={false}
+                                onChange={handleCheckBoxes}
+                                value={item}
+                                label={item}
                             />
-                            }
-                            value={item}
-                            onChange={handleCheckBoxes}
-                            label={item}
-                        />
-                    ); 
-                })
-            }
-        </div>
+                        ); 
+                    })
+                }
+                </FormGroup>
+            <ActionButtons showSubmit={true} disabledSubmit={error} setMesage={props.setMessage} showBack={false} />
+            </FormControl>
+      </div>
     )
 }

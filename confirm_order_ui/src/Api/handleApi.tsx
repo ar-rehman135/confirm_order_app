@@ -18,7 +18,7 @@ export async function handleApi(data:any,request_method:string) {
 
             return result;
         }catch(e){
-            console.log(e);
+            //console.log(e);
         }
     }
     else if(request_method === "GET") {
@@ -33,7 +33,7 @@ export async function handleApi(data:any,request_method:string) {
 
             return result;
         }catch(e){
-            console.log(e);
+            //console.log(e);
         }
     }
 }

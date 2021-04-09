@@ -1,19 +1,15 @@
 import './App.css';
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Button, Grid, makeStyles, Paper } from '@material-ui/core';
-import React, { useState,useEffect } from 'react';
-import { themeDark, useStyles } from './shared/commonStyles';
+import { Grid, Paper } from '@material-ui/core';
+import { useState,useEffect } from 'react';
+import { themeDark } from './shared/commonStyles';
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import Question from './MainComponents/Question';
 import { handleApi } from './Api/handleApi';
-import { debug } from './shared/common';
 import { FlaskDataContext,MyContext,ReactDataContext } from './components/User';
-// import {FlaskDataContext} from 
-
 
 
 function App() {
-  const classes = useStyles();
   let [flaskData,setFlaskData] = useState({state: "", type: "", text: "", options:[]});
   let [reactData,setReactData] = useState({state :"", response:null});
   const [openAlert,setOpenAlert] = useState(false);
@@ -28,8 +24,6 @@ function App() {
 
   const handleSubmit = async (e:any,state:string) => {
     e.preventDefault();  
-    console.log(flaskData);
-    console.log(reactData);
     if(flaskData.state === "B1") {
         setOpenAlert(true);
     }
@@ -42,8 +36,8 @@ function App() {
     }
   }
 
-  const setData = (data:any, cButton:string="")=>{
-    if(cButton === "back"){
+  const setData = (data:any, cButton:string="", setFData:boolean=false)=>{
+    if(cButton === "back" || setFData){
         setFlaskData(data);
         setReactData({state:"",response:null});
     }else{
@@ -60,7 +54,7 @@ function App() {
               <MuiThemeProvider theme={themeDark}>
                 <form method="post" onSubmit={(e:any)=>{handleSubmit(e,flaskData.state)}} autoComplete="off">
                 <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
-                  <Grid item xs={4} style={{height:"100%"}}>
+                  <Grid item xs={10} md={6} style={{height:"100%"}}>
                       <Paper elevation={3}>
                       <Switch>
                           <Route exact path="/">

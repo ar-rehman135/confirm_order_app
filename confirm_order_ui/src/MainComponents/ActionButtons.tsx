@@ -1,34 +1,42 @@
-import React,{useContext} from 'react'
+import {useContext} from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { useStyles } from '../shared/commonStyles';
 import classNames from "classnames";
 import { handleApi } from '../Api/handleApi';
-import {FlaskDataContext,ReactDataContext} from "../components/User";
+import {FlaskDataContext} from "../components/User";
 
+type ActionButtonProps = {
+    showSubmit?: boolean;
+    disabledSubmit?: boolean;
+    setMesage?:any;
+    showBack?: boolean 
+};
 
-function ActionButtons() {
+function ActionButtons(props: ActionButtonProps) {
 
-    let {data,setData} = useContext(FlaskDataContext);
-    let {state,response} = useContext(ReactDataContext);
+    let {setData} = useContext(FlaskDataContext);
     const classes = useStyles();
-
 
 
   const handleBack = async () => {
     let res = await handleApi("","GET");
+    props.setMesage("");
     setData(res,"back");
-
 }
 
   return (
         <div>
             <Grid container  justify="space-evenly">
-                <Grid item xs={12} >
+                <Grid item xs={12} md={12} >
                     <div className="d-flex flex-row justify-content-center">
-                        <Button variant="contained" className={classNames(classes.actionButton,"col-4")}  onClick={handleBack}>Back</Button>
-                        <Button variant="contained" color="primary" type="submit"  className={classNames(classes.actionButton,"col-4")} >
-                            Submit
-                        </Button>
+                        <Button variant="contained" disabled={props.showBack} className={"col-4"} style={{margin:"20px",}} type="reset" onClick={handleBack}>Back</Button>
+                        {
+                        props.showSubmit === true ? 
+                            <Button variant="contained" color="primary" type="submit" disabled={props.disabledSubmit}  className={"col-4"} style={{margin:"20px",}} >
+                                Submit
+                            </Button>
+                        : ""    
+                        }
                     </div>
                 </Grid>
             </Grid>

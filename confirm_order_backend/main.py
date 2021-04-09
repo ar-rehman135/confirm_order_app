@@ -1,27 +1,35 @@
 import datetime
 import json
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_file,send_from_directory
 from flask_cors import cross_origin
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
-# app.config['MONGODB_SETTINGS'] = {
-#     'db': 'confirm_order',
-#     'host': 'localhost',
-#     'port': 27017
-# }
-try:
-    db = MongoEngine()
-    db.init_app(app)
-except:
-    data = {"error":"Failed To Connect Database"}
-    print(data)
 
-class UserData(db.Document):
-    input_request = db.StringField()
-    output_request = db.StringField()
-    ip_address = db.StringField()
-    date = db.DateTimeField()
+global UserData
+
+useDatabase = input("Do You want To Use Database: Y/N \t")
+if useDatabase == 'y' or useDatabase == "Y":
+    useDatabase = True
+    app.config['MONGODB_SETTINGS'] = {
+        'db': 'confirm_order',
+        'host': 'localhost',
+        'port': 27017
+    }
+    try:
+        db = MongoEngine()
+        db.init_app(app)
+        class UserDataTable(db.Document):
+            input_request = db.StringField()
+            output_request = db.StringField()
+            ip_address = db.StringField()
+            dateTime = db.DateTimeField()
+        UserData = UserDataTable
+    except:
+        data = {"error":"Failed To Connect Database"}
+        print(data)
+else:
+    useDatabase = False
 
 
 @app.route("/", defaults={"path": ""})
@@ -34,14 +42,20 @@ def index(path):
 #######################End File #########################
 
 def saveToDb(ip, op, ipaddre):
-    # print(datetime.datetime.now().isoformat())
-    # u = UserData()
-    # u.input_request = ip
-    # u.output_request = op
-    # u.ip_address = ipaddre
-    # u.date = datetime.datetime.now().isoformat()
-    # u.save()
-    return  ""
+    global useDatabase
+    if useDatabase:
+        # print(datetime.datetime.now().isoformat())
+        try:
+            u = UserData()
+            u.input_request = ip
+            u.output_request = op
+            u.ip_address = ipaddre
+            u.dateTime = datetime.datetime.now()
+            u.save()
+            return "saved"
+        except:
+            return "error"
+    return ""
 
 @app.route('/api/handle_data', methods=['POST', 'GET'])
 @cross_origin()
@@ -117,16 +131,20 @@ def insert_data():
                     "content": 'Template'
                 },
                 {
-                    "type": 'Image',
-                    "url": ''
-                },
-                {
                     "type": 'Text',
                     "text": 'hello'
                 },
                 {
                     "type": 'Text',
                     "text": 'hello hy'
+                },
+                {
+                    "type": 'text',
+                    "text": 'Hello How Are You'
+                },
+                {
+                    "type": 'Image',
+                    "url": '/api/img'
                 }
             ]
             data = {
@@ -157,6 +175,12 @@ def delete_data():
             return json.dumps({"sucess": "SuccessFully Delelted All Data"})
 
     return json.dumps({"error": "Failed To Delete Data"})
+
+@app.route('/api/img', methods=['GET'])
+@cross_origin()
+def send_img():
+    return send_from_directory(app.static_folder+"/images", "1.jpg")
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

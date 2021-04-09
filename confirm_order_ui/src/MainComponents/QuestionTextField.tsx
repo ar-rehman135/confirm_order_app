@@ -1,7 +1,8 @@
-import { TextField } from 'material-ui'
-import React,{useContext,useState} from 'react'
+import {useContext,useState} from 'react'
 import MyTextField from '../components/MyTextField'
 import { FlaskDataContext } from '../components/User';
+import ActionButtons from './ActionButtons';
+import {Grid} from '@material-ui/core';
 
 type Props = {
     [x:string]:any;
@@ -20,15 +21,16 @@ export default function QuestionTextField(props:Props) {
     }
 
     return (
-        <>
+        <Grid item xs={12} md={12} style={{textAlign:"center"}}>
             {
                 data.type === "text-input" ? (
                     <>
-                        <MyTextField {...props} size="small" variant="outlined" className="col-12"  type="number" InputProps={{inputProps:{max:120}}} label={data.text} value={value} onChange={handleChange} ></MyTextField>
+                        <MyTextField required {...props} size="small" variant="outlined" className="col-12"  type="number" InputProps={{inputProps:{max:120, min:5}}} label={data.text} value={value} onChange={handleChange} style={{color:'black'}} ></MyTextField>
                     </>
                 ): 
                 (<></>)
             }
-        </>
+            <ActionButtons showSubmit={true} showBack={true} />
+        </Grid>
     )
 }
