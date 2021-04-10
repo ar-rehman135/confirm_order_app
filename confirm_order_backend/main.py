@@ -1,8 +1,9 @@
 import datetime
 import json
-from flask import Flask, request, send_file,send_from_directory
+from flask import Flask, request, send_from_directory
 from flask_cors import cross_origin
-from flask_mongoengine import MongoEngine
+from database.models import UserDataTable
+from database.db import init_db
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 
@@ -12,22 +13,11 @@ useDatabase = input("Do You want To Use Database: Y/N \t")
 if useDatabase == 'y' or useDatabase == "Y":
     useDatabase = True
     app.config['MONGODB_SETTINGS'] = {
-        'db': 'confirm_order',
-        'host': 'localhost',
+        # 'database': 'confirm_order',
+        'host': 'mongodb://localhost/confirm_order',
         'port': 27017
     }
-    try:
-        db = MongoEngine()
-        db.init_app(app)
-        class UserDataTable(db.Document):
-            input_request = db.StringField()
-            output_request = db.StringField()
-            ip_address = db.StringField()
-            dateTime = db.DateTimeField()
-        UserData = UserDataTable
-    except:
-        data = {"error":"Failed To Connect Database"}
-        print(data)
+    init_db(app)
 else:
     useDatabase = False
 
@@ -44,9 +34,8 @@ def index(path):
 def saveToDb(ip, op, ipaddre):
     global useDatabase
     if useDatabase:
-        # print(datetime.datetime.now().isoformat())
         try:
-            u = UserData()
+            u = UserDataTable()
             u.input_request = ip
             u.output_request = op
             u.ip_address = ipaddre
