@@ -2,8 +2,8 @@ import datetime
 import json
 from flask import Flask, request, send_from_directory
 from flask_cors import cross_origin
-from database.models import UserDataTable
-from database.db import init_db
+from src.database.models import UserDataTable
+from src.database.db import init_db
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 
@@ -172,6 +172,6 @@ def send_img():
 
 
 if __name__ == "__main__":
-    app.run(port=7000, debug=True)
+    app.run(host="192.168.1.14",  port=7000, debug=True)
 
 
