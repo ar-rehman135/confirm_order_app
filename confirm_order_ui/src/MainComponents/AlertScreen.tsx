@@ -1,30 +1,36 @@
 import { useContext } from "react";
+import {
+  FlaskDataContext,
+  MyContext,
+  ReactDataContext,
+} from "../components/User";
 import { Button, Grid } from "@material-ui/core";
-import { useStyles } from "../shared/commonStyles";
-import classNames from "classnames";
 import { handleApi } from "../Api/handleApi";
-import { FlaskDataContext } from "../components/User";
 
-type ActionButtonProps = {
-  showSubmit?: boolean;
-  disabledSubmit?: boolean;
-  setMesage?: any;
-  showBack?: boolean;
+type alertScreen = {
+  message: string;
+  setMessage?: any;
 };
 
-function ActionButtons(props: ActionButtonProps) {
+export default function AlertScreen(props: alertScreen) {
+  let { openAlert, setOpenAlert } = useContext(MyContext);
+  let { state, response } = useContext(ReactDataContext);
   let { setData } = useContext(FlaskDataContext);
-  const classes = useStyles();
 
-  const handleBack = async () => {
-    let res = await handleApi("", "GET");
-    props.setMesage("");
-    setData(res, "back");
+  const handleYes = async () => {
+      let res = await handleApi({ state, response }, "POST");
+      if (res) {
+        setData(res, "", true);
+      }
+    }
+    setOpenAlert(false);
   };
 
+  let { data } = useContext(FlaskDataContext);
   return (
-    <div>
+    <>
       <Grid container justify="space-evenly">
+        <p style={{ color: "black", fontSize: "22px" }}>{props.message}</p>
         <Grid item xs={12} md={12}>
           <div className="d-flex flex-row justify-content-center">
             <Button
@@ -54,8 +60,6 @@ function ActionButtons(props: ActionButtonProps) {
           </div>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
-
-export default ActionButtons;
