@@ -1,7 +1,5 @@
 import { useContext } from "react";
 import { Button, Grid } from "@material-ui/core";
-import { useStyles } from "../shared/commonStyles";
-import classNames from "classnames";
 import { handleApi } from "../Api/handleApi";
 import { FlaskDataContext } from "../components/User";
 
@@ -10,15 +8,16 @@ type ActionButtonProps = {
   disabledSubmit?: boolean;
   setMesage?: any;
   showBack?: boolean;
+  setAlertScreen?: any;
 };
 
 function ActionButtons(props: ActionButtonProps) {
   let { setData } = useContext(FlaskDataContext);
-  const classes = useStyles();
 
   const handleBack = async () => {
     let res = await handleApi("", "GET");
     props.setMesage("");
+    props.setAlertScreen(false);
     setData(res, "back");
   };
 

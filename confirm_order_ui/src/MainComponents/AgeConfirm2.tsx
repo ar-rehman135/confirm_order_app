@@ -1,15 +1,17 @@
 import {useContext} from "react";
 import { FlaskDataContext } from '../components/User';
 import ActionButtons from './ActionButtons';
+import {Grid } from "@material-ui/core";
 
 type ageconfirmProps = {
     setMessage?: any;
+    setAlertScreen?: any;
 }
 export default function AgeConfirm2(props: ageconfirmProps) {
     let {data} = useContext(FlaskDataContext);
     //console.log("data", data)
     return (
-        <>
+        <Grid item xs={12} md={12}>
             {
                 data.content.map((item:any,index:number)=>{
                     return (
@@ -33,7 +35,11 @@ export default function AgeConfirm2(props: ageconfirmProps) {
                     ); 
                 })
             }
-            <ActionButtons showSubmit={false} setMesage={props.setMessage} />
-        </>
+            <ActionButtons 
+                showSubmit={false} 
+                setMesage={props.setMessage} 
+                setAlertScreen={props.setAlertScreen}
+            />
+        </Grid>
     )
 }

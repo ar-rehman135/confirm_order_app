@@ -13,9 +13,7 @@ useDatabase = input("Do You want To Use Database: Y/N \t")
 if useDatabase == 'y' or useDatabase == "Y":
     useDatabase = True
     app.config['MONGODB_SETTINGS'] = {
-        # 'database': 'confirm_order',
-        'host': 'mongodb://localhost/confirm_order',
-        'port': 27017
+        'host': 'mongodb://confirmOrder:webdir123R$@50.62.81.130:27017/confirm_order?authSource=admin',
     }
     init_db(app)
 else:
@@ -172,6 +170,6 @@ def send_img():
 
 
 if __name__ == "__main__":
-    app.run(host="192.168.1.14",  port=7000, debug=True)
+    app.run(port=7000, debug=True)
 
 

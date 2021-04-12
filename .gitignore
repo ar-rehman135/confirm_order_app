@@ -4,6 +4,8 @@
 /confirm_order_ui/node_modules
 /confirm_order_backend/.idea
 /confirm_order_backend/venv
+/confirm_order_backend/src/__pycache__
+/confirm_order_backend/src/database/__pycache__
 /.pnp
 .pnp.js
 

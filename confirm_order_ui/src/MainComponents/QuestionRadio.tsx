@@ -7,6 +7,7 @@ type Props = {
     [x:string]:any;
     setMessage?: any;
     setUserAge?: any
+    setAlertScreen?: any;
 }
 
 export default function QuestionRadio(props:Props) {
@@ -50,7 +51,13 @@ export default function QuestionRadio(props:Props) {
             
         </FormControl>
     </div>
-    <ActionButtons showSubmit={true} disabledSubmit={val === "" || val === "None" } setMesage={props.setMessage} showBack={false} />
+    <ActionButtons 
+        showSubmit={true} 
+        disabledSubmit={val === "" || val === "None" } 
+        setMesage={props.setMessage} 
+        showBack={false}
+        setAlertScreen={props.setAlertScreen} 
+    />
     </>
     )
 }

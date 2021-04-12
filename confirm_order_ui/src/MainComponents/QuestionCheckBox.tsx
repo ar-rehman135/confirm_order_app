@@ -88,6 +88,7 @@ export default function QuestionCheckBox(props: Props) {
           disabledSubmit={error}
           setMesage={props.setMessage}
           showBack={false}
+          setAlertScreen={props.setAlertScreen}
         />
       </FormControl>
     </div>

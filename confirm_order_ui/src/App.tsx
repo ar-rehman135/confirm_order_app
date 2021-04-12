@@ -1,8 +1,6 @@
 import './App.css';
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useState,useEffect } from 'react';
-import { themeDark } from './shared/commonStyles';
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import Question from './MainComponents/Question';
 import { handleApi } from './Api/handleApi';
@@ -50,22 +48,18 @@ function App() {
       <Router>
         <FlaskDataContext.Provider value={{data:flaskData,setData}}>
           <ReactDataContext.Provider value={reactData}>
-            <MyContext.Provider value={{openAlert:openAlert,setOpenAlert}}>
-              <MuiThemeProvider theme={themeDark}>
+            <MyContext.Provider value={{openAlert,setOpenAlert}}>
                 <form method="post" onSubmit={(e:any)=>{handleSubmit(e,flaskData.state)}} autoComplete="off">
-                <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
-                  <Grid item xs={10} md={6} style={{height:"100%"}}>
-                      <Paper elevation={3}>
-                      <Switch>
-                          <Route exact path="/">
-                            <Question />
+                  <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
+                    <Grid item xs={10} md={6} style={{height:"100%"}}>
+                        <Switch>
+                            <Route exact path="/">
+                              <Question />
                           </Route>
                       </Switch>
-                      </Paper>
                     </Grid>
                   </Grid>
                 </form>
-              </MuiThemeProvider>
             </MyContext.Provider>
           </ReactDataContext.Provider>
         </FlaskDataContext.Provider>
