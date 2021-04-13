@@ -1,7 +1,8 @@
 import {useContext,useState} from 'react'
-import MyTextField from '../components/MyTextField'
-import { FlaskDataContext } from '../components/User';
 import ActionButtons from './ActionButtons';
+
+import { TextField } from '@material-ui/core'
+import { FlaskDataContext } from '../components/User';
 import {Grid} from '@material-ui/core';
 
 type Props = {
@@ -21,16 +22,27 @@ export default function QuestionTextField(props:Props) {
     }
 
     return (
-        <Grid item xs={12} md={12} style={{textAlign:"center"}}>
-            {
-                data.type === "text-input" ? (
-                    <>
-                        <MyTextField required {...props} size="small" variant="outlined" className="col-12"  type="number" InputProps={{inputProps:{max:120, min:5}}} label={data.text} value={value} onChange={handleChange} style={{color:'black'}} ></MyTextField>
-                    </>
-                ): 
-                (<></>)
-            }
-            <ActionButtons showSubmit={true} showBack={true} />
-        </Grid>
+        <div className="row" style={{width:"100%"}} >
+            <div className="col-xs-4 col-md-4"></div>
+            <div className="col-xs-4 col-md-4">
+                {
+                    data.type === "text-input" ? (
+                        <>  
+                            <p style={{color:"white", textAlign:"left"}}>{data.text}</p>
+                            <TextField required size="small" variant="outlined" type="number" InputProps={{inputProps:{max:120, min:5}}} value={value} 
+                            onChange={handleChange} 
+                            style={{color:'black', backgroundColor:"white"}} 
+                            className="col-12"
+                            />
+                        </>
+                    ): 
+                    (<></>)
+                }
+                
+            </div>
+            <div className="col-xs-4 col-md-4"></div>
+
+        <ActionButtons showSubmit={true} showBack={true} />
+        </div>
     )
 }

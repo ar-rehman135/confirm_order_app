@@ -1,5 +1,8 @@
 import { useContext, useState } from "react";
 import QuestionTextField from "./QuestionTextField";
+import { Button, Grid } from "@material-ui/core";
+import ActionButtons from './ActionButtons';
+
 import QuestionCheckBox from "./QuestionCheckBox";
 import QuestionRadio from "./QuestionRadio";
 import { FlaskDataContext, MyContext } from "../components/User";
@@ -26,17 +29,17 @@ function Question() {
 
   return (
     <div
+      className="container-fluid myClass"
       style={{
-        margin: "5%",
         padding: "50px 0px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+        backgroundColor: "black",
+        height: '100vh'
       }}
     >
-      <div style={{ color: "black",fontFamily:"monospace" }}><h2>Welcome To Confirm Order App</h2></div>
-      <div style={{ marginTop: "40px" }}>
         {
           data.state === "A" ? (
             <QuestionTextField />
@@ -79,8 +82,8 @@ function Question() {
         (
           ""
         )
+
         }
-      </div>
     </div>
   );
 }

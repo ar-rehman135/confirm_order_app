@@ -51,7 +51,7 @@ def insert_data():
         data = {
             'state': 'A',
             'type': 'text-input',
-            'text': 'Hello, How old are you!'
+            'text': 'Hello, How old are you?'
         }
         j = json.dumps(data)
         saveToDb('', j, request.environ['REMOTE_ADDR'])

@@ -50,15 +50,11 @@ function App() {
           <ReactDataContext.Provider value={reactData}>
             <MyContext.Provider value={{openAlert,setOpenAlert}}>
                 <form method="post" onSubmit={(e:any)=>{handleSubmit(e,flaskData.state)}} autoComplete="off">
-                  <Grid container spacing={3}  justify="space-evenly" style={{height:"100%"}}>
-                    <Grid item xs={10} md={6} style={{height:"100%"}}>
-                        <Switch>
-                            <Route exact path="/">
-                              <Question />
-                          </Route>
-                      </Switch>
-                    </Grid>
-                  </Grid>
+                    <Switch>
+                        <Route exact path="/">
+                          <Question />
+                      </Route>
+                  </Switch>
                 </form>
             </MyContext.Provider>
           </ReactDataContext.Provider>

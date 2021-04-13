@@ -22,37 +22,37 @@ function ActionButtons(props: ActionButtonProps) {
   };
 
   return (
-    <div>
-      <Grid container justify="space-evenly">
-        <Grid item xs={12} md={12}>
-          <div className="d-flex flex-row justify-content-center">
-            <Button
-              variant="contained"
-              disabled={props.showBack}
-              className={"col-4"}
-              style={{ margin: "20px" }}
-              type="reset"
-              onClick={handleBack}
-            >
-              Back
-            </Button>
-            {props.showSubmit === true ? (
+    <div className="footer">
+          <div className="row">
+            <div className="col-xs-4 col-md-4" style={{textAlign:"center"}}>
               <Button
                 variant="contained"
-                color="primary"
-                type="submit"
-                disabled={props.disabledSubmit}
-                className={"col-4"}
-                style={{ margin: "20px" }}
+                disabled={props.showBack}
+                style={{backgroundColor: "grey", color:"white", margin:"30px 0px"}}
+                onClick={handleBack}
+                className="col-md-2 col-8"
               >
-                Submit
+                Back
               </Button>
-            ) : (
-              ""
-            )}
+            </div>
+            <div className="col-xs-4 col-md-4"><span></span></div>
+            <div className="col-xs-4 col-md-4" style={{textAlign:"center"}}>
+              {props.showSubmit === true ? (
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={props.disabledSubmit}
+                  className="col-md-2 col-8"
+                  style={{margin:"30px 0px", color:"white", backgroundColor:"#3F51B5" }}
+                >
+                  Submit
+                </Button>
+              ) : (
+                ""
+              )}
+            </div>
+            
           </div>
-        </Grid>
-      </Grid>
     </div>
   );
 }

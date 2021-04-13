@@ -53,7 +53,9 @@ export default function QuestionCheckBox(props: Props) {
   const error = selectedItems.length <= 0;
 
   return (
-    <div style={{ paddingLeft: "15px" }}>
+    <div className="row" style={{width:"100%"}} >
+      <div className="col-xs-4 col-md-4"></div>
+      <div className="col-xs-4 col-md-4">
       <FormControl
         required
         error={error}
@@ -69,13 +71,11 @@ export default function QuestionCheckBox(props: Props) {
                 control={
                   <Checkbox
                     color="primary"
-                    defaultChecked={false}
                     onChange={handleCheckBoxes}
                     checked={checked[index]}
                   />
                 }
                 checked={checked[index]}
-                defaultChecked={false}
                 onChange={handleCheckBoxes}
                 value={item}
                 label={item}
@@ -91,6 +91,10 @@ export default function QuestionCheckBox(props: Props) {
           setAlertScreen={props.setAlertScreen}
         />
       </FormControl>
-    </div>
+          
+      </div>
+      <div className="col-xs-4 col-md-4"></div>
+      <ActionButtons showSubmit={true} showBack={true} />
+    </div>    
   );
 }
