@@ -40,7 +40,7 @@ export default function QuestionCheckBox(props: Props) {
       const remainItems = selectedItems.filter((value) => value !== v);
       setSelectedItems(remainItems);
       setData({ state: data.state, response: remainItems }, "");
-      props.setAlertScreen(true);
+      //props.setAlertScreen(true);
       props.setMessage(
         "Ice Cream With " + remainItems.toString() + " Is That it ?"
       );
@@ -54,13 +54,13 @@ export default function QuestionCheckBox(props: Props) {
 
   return (
     <div className="row" style={{width:"100%"}} >
-      <div className="col-xs-4 col-md-4"></div>
-      <div className="col-xs-4 col-md-4">
+      <div className="col-md-5 col-xs-6"></div>
+      <div className="col-md-7 col-xs-6">
       <FormControl
         required
         error={error}
         component="fieldset"
-        style={{ textAlign: "left" }}
+        style={{color:"white" }}
       >
         <FormLabel component="legend">{data.text}</FormLabel>
         <FormGroup>
@@ -73,6 +73,7 @@ export default function QuestionCheckBox(props: Props) {
                     color="primary"
                     onChange={handleCheckBoxes}
                     checked={checked[index]}
+                    style={{color:"white"}}
                   />
                 }
                 checked={checked[index]}
@@ -83,18 +84,15 @@ export default function QuestionCheckBox(props: Props) {
             );
           })}
         </FormGroup>
-        <ActionButtons
+      </FormControl>
+      </div>
+      <ActionButtons
           showSubmit={true}
           disabledSubmit={error}
           setMesage={props.setMessage}
           showBack={false}
           setAlertScreen={props.setAlertScreen}
         />
-      </FormControl>
-          
-      </div>
-      <div className="col-xs-4 col-md-4"></div>
-      <ActionButtons showSubmit={true} showBack={true} />
     </div>    
   );
 }

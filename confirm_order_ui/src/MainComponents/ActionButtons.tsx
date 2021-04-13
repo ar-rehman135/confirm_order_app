@@ -23,27 +23,27 @@ function ActionButtons(props: ActionButtonProps) {
 
   return (
     <div className="footer">
-          <div className="row">
-            <div className="col-xs-4 col-md-4" style={{textAlign:"center"}}>
+          <div className="row" style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+            <div className="col-4" style={{textAlign:"center"}}>
               <Button
                 variant="contained"
                 disabled={props.showBack}
-                style={{backgroundColor: "grey", color:"white", margin:"30px 0px"}}
+                style={{backgroundColor: "grey", color:"white", margin:"30px 5px"}}
                 onClick={handleBack}
-                className="col-md-2 col-8"
+                className="col-md-2"
               >
                 Back
               </Button>
             </div>
-            <div className="col-xs-4 col-md-4"><span></span></div>
-            <div className="col-xs-4 col-md-4" style={{textAlign:"center"}}>
+            
+            <div className="col-4" style={{textAlign:"center"}}>
               {props.showSubmit === true ? (
                 <Button
                   variant="contained"
                   type="submit"
                   disabled={props.disabledSubmit}
-                  className="col-md-2 col-8"
-                  style={{margin:"30px 0px", color:"white", backgroundColor:"#3F51B5" }}
+                  className="col-md-2"
+                  style={{margin:"30px 5px",color:"white", backgroundColor:"#3F51B5" }}
                 >
                   Submit
                 </Button>

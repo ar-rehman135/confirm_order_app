@@ -30,7 +30,7 @@ export default function AlertScreen(props: alertScreen) {
     <>
       <Grid container justify="space-evenly">
         <Grid item xs={12} md={10}>
-        <p style={{ color: "black", fontSize: "15px" }}>{props.message}</p>
+        <p style={{ color: "white", fontSize: "15px" }}>{props.message}</p>
           <div className="d-flex flex-row justify-content-center">
             <Button
               variant="contained"
