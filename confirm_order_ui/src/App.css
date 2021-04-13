@@ -8,7 +8,16 @@ body {
   height: 40vmin;
   pointer-events: none;
 }
-
+.alertScreenButton {
+  width: 140px;
+  margin-right:10px !important;
+  height: 140px;
+  background-color: grey !important;
+  color: white !important;
+  font-weight: bolder !important;
+  border-radius: 10px !important;
+  font-size: 35px !important;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

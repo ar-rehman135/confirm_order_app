@@ -9,17 +9,23 @@ type confirmOrder = {
 }
 
 export default function OrderConfirmed(props:confirmOrder ) {
-    let {data} = useContext(FlaskDataContext);
-    return (
-        <Grid item xs={12} md={12}>
-            <p style={{color:"black", fontSize:"22px"}}>
+let {data} = useContext(FlaskDataContext);
+return (
+    <>
+    <div className="row" style={{width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center"}} >
+        <div className="col-md-12 col-xs-12">
+            <p style={{color:"white", fontSize:"35px", textAlign:"center"}}>
                 {data.text}
-            </p>
-            <ActionButtons 
-                showSubmit={false} 
-                setMesage={props.setMessage} 
-                setAlertScreen={props.setAlertScreen}
-            />
-        </Grid>
+            </p> 
+        </div>
+        
+    </div> 
+    <ActionButtons 
+            showSubmit={true}
+            disabledSubmit={true}
+            setMesage={props.setMessage} 
+            setAlertScreen={props.setAlertScreen}
+        />
+    </>   
     )
 }

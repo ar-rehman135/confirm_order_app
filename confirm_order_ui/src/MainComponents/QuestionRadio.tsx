@@ -1,4 +1,4 @@
-import { FormControlLabel, Radio, FormControl, RadioGroup } from '@material-ui/core';
+import { FormControlLabel, Radio, FormControl, RadioGroup, Button } from '@material-ui/core';
 import { useContext, useState } from 'react'
 import { FlaskDataContext } from '../components/User';
 import ActionButtons from './ActionButtons';
@@ -23,41 +23,64 @@ export default function QuestionRadio(props:Props) {
     }  
 
     return (
-        <>
-        <p style={{color:"black"}} >{data.text}</p>
-        <div style={{paddingLeft:"15px", maxHeight:"300px", overflowY:"scroll", overflowX:"hidden", display:"flex"}}>
-        <FormControl required error={val ==="" || val === "None"} component="fieldset" style={{textAlign:"left"}} >
-            <RadioGroup defaultValue="" aria-label="age" name="customized-radios">
-            {
-            list.map((item:any,index:number)=>{
-                    return (
-                        <FormControlLabel
-                                key={index}
-                                control={
-                                <Radio
-                                    color="primary"
-                                    size="small"
-                                    onChange={()=>handleRadio(item)}
-                                    
-                                />
-                                }
-                                label={item}
-                                value={item}
-                        />
-                    ); 
-                })
-            }
-            </RadioGroup>
-            
-        </FormControl>
-    </div>
-    <ActionButtons 
+    <>
+    <div className="row" style={{width:"100%"}} >
+      <div className="col-md-12 col-xs-12" style={{display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"column"}}>
+        <p style={{color:"white"}} >{data.text}</p>
+        <div className="row" style={{maxHeight:"300px", overflowY:"scroll", overflowX:"hidden", textAlign:"center",width:"50%" }} >
+                {/* { */}
+                {/* // list.map((item:any,index:number)=>{ */}
+                        {/* // return ( */}
+                            <div className="col-md-4" style={{ padding: "15px"}} >
+                                <Button
+                                    variant="contained"
+                                    style={{width: "120px", height: "120px"}}
+                                    onClick={()=>handleRadio("item")}
+                                >
+                                    {/* {item} */} abc
+                                </Button>
+                            </div>
+                            <div className="col-md-4" style={{ padding: "15px"}} >
+                                <Button
+                                    variant="contained"
+                                    style={{width: "120px", height: "120px"}}
+                                    onClick={()=>handleRadio("item")}
+                                >
+                                    {/* {item} */} abc
+                                </Button>
+                            </div>
+                            <div className="col-md-4" style={{ padding: "15px"}} >
+                                <Button
+                                    variant="contained"
+                                    style={{width: "120px", height: "120px"}}
+                                    onClick={()=>handleRadio("item")}
+                                >
+                                    {/* {item} */} abc
+                                </Button>
+                            </div>
+                            <div className="col-md-4" style={{ padding: "15px"}} >
+                                <Button
+                                    variant="contained"
+                                    style={{width: "120px", height: "120px"}}
+                                    onClick={()=>handleRadio("item")}
+                                >
+                                    {/* {item} */} abc
+                                </Button>
+                            </div>
+                           
+                        {/* // );  */}
+                    {/* // }) */}
+                {/* // } */}
+        </div>    
+      </div>
+      <ActionButtons 
         showSubmit={true} 
         disabledSubmit={val === "" || val === "None" } 
         setMesage={props.setMessage} 
         showBack={false}
         setAlertScreen={props.setAlertScreen} 
-    />
+     />
+    </div> 
     </>
     )
 }

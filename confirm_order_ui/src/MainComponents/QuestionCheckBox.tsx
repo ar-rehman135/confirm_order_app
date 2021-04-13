@@ -54,8 +54,7 @@ export default function QuestionCheckBox(props: Props) {
 
   return (
     <div className="row" style={{width:"100%"}} >
-      <div className="col-md-5 col-xs-6"></div>
-      <div className="col-md-7 col-xs-6">
+      <div className="col-md-12 col-xs-12" style={{textAlign:"center"}}>
       <FormControl
         required
         error={error}

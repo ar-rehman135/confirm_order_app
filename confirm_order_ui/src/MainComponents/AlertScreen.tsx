@@ -3,8 +3,10 @@ import {
   FlaskDataContext,
   ReactDataContext,
 } from "../components/User";
-import { Button, Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { handleApi } from "../Api/handleApi";
+import ActionButtons from './ActionButtons';
+
 
 type alertScreen = {
   message: string;
@@ -27,31 +29,24 @@ export default function AlertScreen(props: alertScreen) {
   }
 
   return (
-    <>
-      <Grid container justify="space-evenly">
-        <Grid item xs={12} md={10}>
+    <div className="row" style={{width:"100%"}} >
+      <div className="col-md-12 col-xs-12" style={{textAlign:"center"}}>
         <p style={{ color: "white", fontSize: "15px" }}>{props.message}</p>
-          <div className="d-flex flex-row justify-content-center">
-            <Button
-              variant="contained"
-              className={"col-4"}
-              style={{ margin: "20px" }}
-              onClick={handleYes}
-            >
-              Yes
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNo}
-              className={"col-4"}
-              style={{ margin: "20px" }}
-            >
-              No
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
-    </>
+        <Button
+          variant="contained"
+          className="alertScreenButton"
+          onClick={handleYes}
+        >
+          Yes
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNo}
+          className="alertScreenButton"
+        >
+          No
+        </Button>
+      </div>
+  </div> 
   );
 }
