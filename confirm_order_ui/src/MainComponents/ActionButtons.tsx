@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { handleApi } from "../Api/handleApi";
 import { FlaskDataContext } from "../components/User";
 
@@ -23,12 +23,12 @@ function ActionButtons(props: ActionButtonProps) {
 
   return (
     <div className="footer">
-          <div className="row" style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+          <div className="row" style={{display:"flex", alignItems:"center", justifyContent:"space-around"}}>
             <div className="col-4" style={{textAlign:"center"}}>
               <Button
                 variant="contained"
                 disabled={props.showBack}
-                style={{backgroundColor: "grey", color:"white", margin:"30px 5px"}}
+                style={{backgroundColor: "#313537", color:"white", margin:"30px 5px"}}
                 onClick={handleBack}
                 className="col-md-2"
               >

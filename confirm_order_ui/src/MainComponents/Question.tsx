@@ -1,7 +1,5 @@
 import { useContext, useState } from "react";
 import QuestionTextField from "./QuestionTextField";
-import { Button, Grid } from "@material-ui/core";
-import ActionButtons from './ActionButtons';
 
 import QuestionCheckBox from "./QuestionCheckBox";
 import QuestionRadio from "./QuestionRadio";
@@ -14,7 +12,6 @@ import AlertScreen from "./AlertScreen";
 function Question() {
   let { data } = useContext(FlaskDataContext);
   let {openAlert, setOpenAlert} = useContext(MyContext);
-  //console.log("openAlert", openAlert);
   const [alertMessage, setAlertMessage] = useState("");
   const [age, setAge] = useState("");
 
@@ -36,7 +33,7 @@ function Question() {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        backgroundColor: "black",
+        backgroundColor: "#181A1B",
         height: '100vh'
       }}
     >

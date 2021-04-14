@@ -3,7 +3,6 @@ import ActionButtons from './ActionButtons';
 
 import { TextField } from '@material-ui/core'
 import { FlaskDataContext } from '../components/User';
-import {Grid} from '@material-ui/core';
 
 type Props = {
     [x:string]:any;
